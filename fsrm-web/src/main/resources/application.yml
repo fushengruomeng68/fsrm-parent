@@ -1,0 +1,87 @@
+server:
+  port: 7000
+fsrm:
+  mybatis-plus:
+    auto-fill:
+      enabled: true
+      enableInsertFill: true
+      enableUpdateFill: true
+spring:
+  main:
+    #关闭banner
+    banner-mode: "off"
+  datasource:
+    url: jdbc:mysql://192.168.184.131:3306/fsrm?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&useSSL=false&zeroDateTimeBehavior=convertToNull&serverTimezone=Asia/Shanghai
+    username: fsrm
+    password: fsrm123
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    ##### druid配置
+    druid:
+      #连接池配置(通常来说，只需要修改initialSize、minIdle、maxActive
+      initial-size: 10
+      max-active: 100
+      min-idle: 10
+      # 配置获取连接等待超时的时间
+      max-wait: 60000
+      #打开PSCache，并且指定每个连接上PSCache的大小
+      pool-prepared-statements: true
+      max-pool-prepared-statement-per-connection-size: 20
+      validation-query: SELECT 'x'
+      test-on-borrow: false
+      test-on-return: false
+      test-while-idle: true
+      #配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒
+      time-between-eviction-runs-millis: 60000
+      #配置一个连接在池中最小生存的时间，单位是毫秒
+      min-evictable-idle-time-millis: 300000
+      filters: stat,wall
+      filter:
+        stat:
+          log-slow-sql: true
+          slow-sql-millis: 2000
+        wall:
+          enabled: true
+          config:
+            delete-allow: false
+            drop-table-allow: false
+            comment-allow: true
+      # WebStatFilter配置，说明请参考Druid Wiki，配置_配置WebStatFilter
+      #是否启用StatFilter默认值true
+      web-stat-filter:
+        enabled: true
+        url-pattern: /*
+        exclusions: "*.js , *.gif ,*.jpg ,*.png ,*.css ,*.ico , /druid/*"
+        session-stat-max-count: 1000
+        profile-enable: true
+        session-stat-enable: false
+      # StatViewServlet配置
+      #展示Druid的统计信息,StatViewServlet的用途包括：1.提供监控信息展示的html页面2.提供监控信息的JSON API
+      #是否启用StatViewServlet默认值true
+      stat-view-servlet:
+        enabled: true
+        #根据配置中的url-pattern来访问内置监控页面，如果是上面的配置，内置监控页面的首页是/druid/index.html例如：http://127.0.0.1:9000/druid/index.html
+        url-pattern: /druid/*
+        #允许清空统计数据
+        reset-enable: true
+        login-username: admin
+        login-password: admin
+
+mybatis-plus:
+  mapper-locations: classpath:/mapper/**/*Mapper.xml
+  #实体扫描，多个package用逗号或者分号分隔
+  typeAliasesPackage: com.msyizu.**.model
+  global-config:
+    db-config:
+      id-type: auto
+      #字段策略 IGNORED:"忽略判断",NOT_NULL:"非 NULL 判断"),NOT_EMPTY:"非空判断"
+      field-strategy: NOT_NULL
+      #逻辑删除配置
+      logic-delete-value: 1
+      logic-not-delete-value: 0
+    #关闭banner
+    banner: false
+  # 原生配置
+  configuration:
+    map-underscore-to-camel-case: true
+    cache-enabled: false
+    log-prefix: fsrmlog.

@@ -18,7 +18,6 @@ public class BinarySearchNon {
             BigDecimal bmax = new BigDecimal(Double.toString(max));
             BigDecimal btarget = new BigDecimal(Double.toString(target));
 
-            BigDecimal bzero = new BigDecimal("0");
             BigDecimal btwo = new BigDecimal("2");
 
             BigDecimal badd = bmin.add(bmax);
@@ -30,7 +29,7 @@ public class BinarySearchNon {
 
             BigDecimal bjian = bmid.subtract(btarget);
             //误差大于0小于误差值
-            if (bjian.compareTo(berr) < 1 && bjian.compareTo(bzero) == 1) {
+            if (bjian.compareTo(berr) < 1 && bjian.compareTo(BigDecimal.ZERO) == 1) {
                 //保留4位小数，直接删除第5位
                 BigDecimal bmidScale = bmid.setScale(4,BigDecimal.ROUND_DOWN);
                 return bmidScale.doubleValue();
